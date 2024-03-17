@@ -22,11 +22,15 @@ const Playlist = () => {
     }, []);
  
     function updatePlaylist(newPlayList) {
-        let playList = newPlayList.map((item, index) => ({
-            ...item,
-            id: index,
-        }));
-        setCurrentPlayList(playList);
+        if (newPlayList && newPlayList.tracks && Array.isArray(newPlayList.tracks)) {
+            let playList = newPlayList.tracks.map((item, index) => ({
+                ...item,
+                id: index,
+            }));
+            setCurrentPlayList(playList);
+        } else {
+            console.error('Data fetched does not contain a tracks array:', newPlayList);
+        }
     }
  
     function shufflePlayList() {
